@@ -1,0 +1,1 @@
+<input {!! $attributes->merge(['class' => 'bg-white placeholder-slate-300 rounded-sm text-sm shadow-sm border-transparent focus:border-transparent outline-none focus:outline-none focus:ring-0 mt-2']) !!}>

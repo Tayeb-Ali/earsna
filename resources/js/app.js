@@ -1,5 +1,5 @@
-require('./bootstrap');
-require('./flatpicker');
+import './bootstrap';
+import './flatpicker';
 
 import Alpine from 'alpinejs';
 import jQuery from 'jquery-slim';

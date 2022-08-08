@@ -3,6 +3,11 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\Client\{NewCustomerRequest, UpdateCustomerRequest};
 use App\Models\Client\Customer;
@@ -14,7 +19,7 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -28,7 +33,7 @@ class CustomerController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function create()
     {
@@ -38,8 +43,8 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param NewCustomerRequest $request
+     * @return Response
      */
     public function store(NewCustomerRequest $request)
     {
@@ -57,8 +62,9 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Client\Customer $customer
-     * @return \Illuminate\Http\Response
+     * @param Hall $hall
+     * @param Customer $customer
+     * @return Application|Factory|View
      */
     public function edit(Hall $hall, Customer $customer)
     {
@@ -68,9 +74,10 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Client\Customer $customer
-     * @return \Illuminate\Http\Response
+     * @param UpdateCustomerRequest $request
+     * @param Hall $hall
+     * @param Customer $customer
+     * @return Response
      */
     public function update(UpdateCustomerRequest $request, Hall $hall, Customer $customer)
     {
@@ -84,8 +91,8 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Client\Customer $customer
-     * @return \Illuminate\Http\Response
+     * @param Customer $customer
+     * @return Response
      */
     public function destroy(Hall $hall, Customer $customer)
     {

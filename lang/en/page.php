@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'dashboard' =>[
+    'dashboard' => [
         'header' => 'Dashboard',
         'cards' => [
             'revenues' => [
@@ -39,7 +39,7 @@ return [
     'users' => [
         'index' => [
             'header' => 'Users',
-            'table' => [ 'name' => 'Name', 'email' => 'Email', 'phone' => 'Phone', 'role' => 'Role'],
+            'table' => ['name' => 'Name', 'email' => 'Email', 'phone' => 'Phone', 'role' => 'Role'],
         ],
         'create' => ['header' => 'Create New User'],
         'edit' => ['header' => 'Update The User :user'],
@@ -62,7 +62,7 @@ return [
     'features' => [
         'index' => [
             'header' => 'Features',
-            'table'  => ['description' => 'Description',],
+            'table' => ['description' => 'Description',],
         ],
         'create' => ['header' => 'Create New Feature'],
         'edit' => ['header' => 'Update The Feature :feature'],
@@ -82,7 +82,7 @@ return [
     'offers' => [
         'index' => [
             'header' => 'Offers',
-            'table'  => ['#' => '#', 'description' => 'Description', 'price' => 'Price'],
+            'table' => ['#' => '#', 'description' => 'Description', 'price' => 'Price'],
         ],
         'create' => ['header' => 'Create New Offer'],
         'edit' => ['header' => 'Update The Offer :offer'],
@@ -155,8 +155,8 @@ return [
                 'status' => 'Status',
             ],
         ],
-        'create' => [ 'header' => 'Create New Subscription', ],
-        'edit' => [ 'header' => 'Update Subscription :subscription','note' => ['label' => 'Note', 'content' => 'For editing client\'s halls data please refer to halls section and go to the required hall'] ],
+        'create' => ['header' => 'Create New Subscription',],
+        'edit' => ['header' => 'Update Subscription :subscription', 'note' => ['label' => 'Note', 'content' => 'For editing client\'s halls data please refer to halls section and go to the required hall']],
         'form' => [
             'client' => ['label' => 'Client', 'placeholder' => 'Please select one of the available clients.'],
             'package' => ['label' => 'Package', 'placeholder' => 'Please select one of the available packages.'],
@@ -178,8 +178,8 @@ return [
             'header' => 'Business Fields',
             'table' => ['field' => 'Field', 'type' => 'Type'],
         ],
-        'create' => [ 'header' => 'Create New Business Field', ],
-        'edit' => [ 'header' => 'Update :field Business Field', ],
+        'create' => ['header' => 'Create New Business Field',],
+        'edit' => ['header' => 'Update :field Business Field',],
         'form' => [
             'name' => ['label' => 'Name', 'placeholder' => 'Weddings and events.'],
             'type' => ['label' => 'Type', 'placeholder' => 'Please select one of the types below.'],
@@ -211,7 +211,7 @@ return [
             ]
         ],
         'create' => ['header' => 'Create New Hall',],
-        'edit' => [ 'header' => 'Update :hall Hall'],
+        'edit' => ['header' => 'Update :hall Hall'],
         'form' => [
             'name' => ['label' => 'Name', 'placeholder' => 'Please insert the hall name'],
             'city' => ['label' => 'City', 'placeholder' => 'Please select the city where hall is located'],
@@ -256,7 +256,7 @@ return [
             ]
         ],
         'create' => ['header' => 'Create New Customer'],
-        'edit' => [ 'header' => 'Update :customer Data', ],
+        'edit' => ['header' => 'Update :customer Data',],
         'form' => [
             'name' => ['label' => 'Name', 'placeholder' => 'Please enter the full name'],
             'company' => ['label' => 'Company', 'placeholder' => 'Please enter the company name'],
@@ -361,7 +361,8 @@ return [
         'flash' => [
             'created' => 'A new expense has been created',
             'updated' => 'The expense number :expense has been updated',
-            'deleted' => 'The expense :expense is deleted'
+            'deleted' => 'The expense :expense is deleted',
+            'failed' => 'The expense could not be save because of the following errors',
         ],
     ],
     'revenues' => [

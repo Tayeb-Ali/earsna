@@ -1,35 +1,47 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\NewBookingRequest;
 use App\Http\Requests\Api\UpdateBookingRequest;
 use App\Models\Client\Booking;
 use App\Models\Client\BookingTime;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class BookingController extends Controller
 {
+
+    public function index()
+    {
+        $bookings = Booking::paginate();
+        return response()->json($bookings);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return JsonResponse
      */
     public function store(NewBookingRequest $request)
     {
-        Booking::create($request->validated() + ['user_id' => auth()->id()]);
+        $request->validated();
+        $input = $request->all();
+        Booking::create($input);
 
-        return response(200);
+        return response()->json(['status' => true, 'message' => 'Booking created successfully']);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Client\Booking  $booking
-     * @return \Illuminate\Http\Response
+     * @param Booking $booking
+     * @return JsonResponse
      */
-    public function edit(Booking $booking)
+    public function show(Booking $booking)
     {
         return response()->json(['booking' => $booking]);
     }
@@ -37,9 +49,9 @@ class BookingController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Client\Booking  $booking
-     * @return \Illuminate\Http\Response
+     * @param UpdateBookingRequest $request
+     * @param Booking $booking
+     * @return JsonResponse
      */
     public function update(UpdateBookingRequest $request, Booking $booking)
     {
@@ -53,8 +65,8 @@ class BookingController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Client\Booking  $booking
-     * @return \Illuminate\Http\Response
+     * @param Booking $booking
+     * @return JsonResponse
      */
     public function destroy(Booking $booking)
     {

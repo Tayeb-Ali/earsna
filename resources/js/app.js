@@ -131,54 +131,15 @@ Alpine.store('bookingTimes', {
                 period: this.period
             }
         })
-        .then(response => {
-            if (response.data.no_times) {
-                noBookingTimes.append(response.data.no_times);
-            } else {
-                noBookingTimes.textContent = '';
-
-                if (! Array.isArray(response.data.times)) {
-                    const time = response.data.times[1];
-
-                    let row = `
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-slate-500">
-                                        <input
-                                            name="bookingTime_id" value="${time.id}" type="radio"
-                                            @click="$store.payment.setBookingTime(${time.price}, true)"
-                                            class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
-                                        >
-                                    </div>
-                                </td>
-
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-slate-500">
-                                        ${time.from}
-                                    </div>
-                                </td>
-
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-slate-500">
-                                        ${time.to}
-                                    </div>
-                                </td>
-
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="booking-time-price text-sm text-slate-500">
-                                        ${time.price}
-                                    </div>
-                                </td>
-
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-slate-500"></div>
-                                </td>
-                            </tr>
-                        `;
-
-                    bookingTimes.append(row);
+            .then(response => {
+                if (response.data.no_times) {
+                    noBookingTimes.append(response.data.no_times);
                 } else {
-                    response.data.times.forEach(time => {
+                    noBookingTimes.textContent = '';
+
+                    if (!Array.isArray(response.data.times)) {
+                        const time = response.data.times[1];
+
                         let row = `
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -216,13 +177,52 @@ Alpine.store('bookingTimes', {
                         `;
 
                         bookingTimes.append(row);
-                    });
+                    } else {
+                        response.data.times.forEach(time => {
+                            let row = `
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-slate-500">
+                                        <input
+                                            name="bookingTime_id" value="${time.id}" type="radio"
+                                            @click="$store.payment.setBookingTime(${time.price}, true)"
+                                            class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
+                                        >
+                                    </div>
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-slate-500">
+                                        ${time.from}
+                                    </div>
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-slate-500">
+                                        ${time.to}
+                                    </div>
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="booking-time-price text-sm text-slate-500">
+                                        ${time.price}
+                                    </div>
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-slate-500"></div>
+                                </td>
+                            </tr>
+                        `;
+
+                            bookingTimes.append(row);
+                        });
+                    }
                 }
-            }
-        })
-        .catch(errors => {
-            console.log(errors);
-        })
+            })
+            .catch(errors => {
+                console.log(errors);
+            })
     },
 });
 
@@ -288,7 +288,7 @@ Alpine.store('halls', {
 Alpine.store('payment', {
     bookingTime: 0,
     offer: 0,
-    service:0,
+    service: 0,
     remaining: 0,
     total: 0,
 
@@ -349,7 +349,7 @@ Alpine.store('payment', {
     updateRemainingInput(value) {
         const remainingInputs = $('.remaining');
 
-        for(let input of remainingInputs) {
+        for (let input of remainingInputs) {
             $(input).val(this.round(value))
         }
     },
@@ -357,7 +357,7 @@ Alpine.store('payment', {
     updateTotalInput(value) {
         const totalInputs = $('.total');
 
-        for(let input of totalInputs) {
+        for (let input of totalInputs) {
             $(input).val(this.round(value))
         }
     },
@@ -385,9 +385,9 @@ Alpine.store('client', {
                 client_id: clientId
             }
         }).then(response => {
-            
+
         }).catch(errors => {
-            
+
         });
     }
 })

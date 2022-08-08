@@ -26,10 +26,12 @@ class NewBookingRequest extends FormRequest
         return [
             'date' => ['required', 'date'],
             'bookingTime_id' => ['required', 'exists:booking_times,id'],
+            'customer_id' => ['required', 'exists:customers,id'],
             'offer_id' => ['required', 'exists:offers,id'],
+            'service_id' => ['required', 'exists:services,id'],
             'payment_method' => ['required', 'in:bank,cash'],
-            'paid_amount' => ['required', 'numeric'],
-            'remaining_amount' => ['required', 'numeric'],
+            'paid' => ['required', 'numeric'],
+            'remaining' => ['required', 'numeric'],
             'total' => ['required', 'numeric'],
             'status' => ['required', 'in:confirmed,temporary,paid,canceled'],
             'notes' => ['nullable', 'string']

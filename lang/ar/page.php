@@ -331,7 +331,8 @@ return [
         'flash' => [
             'created' => 'تم إنشاء مصروف جديد',
             'updated' => 'تم تحديث بيانات المصروف رقم :expense',
-            'deleted' => 'تم حذف المصروف رقم :expense'
+            'deleted' => 'تم حذف المصروف رقم :expense',
+            'failed' => 'حدث خطأ أثناء إنشاء المصروف'
         ],
     ],
     'revenues' => [

@@ -17,6 +17,7 @@ Route::group(['as' => 'api.'], function () {
         Route::get('auth/user', [AuthAPIController::class, 'user']);
         Route::post('auth/logout', [AuthAPIController::class, 'logout']);
         Route::post('auth/token', [AuthAPIController::class, 'checkToken']);
+        Route::patch('auth/users', [AuthAPIController::class, 'updateUser']);
 
 
 // Get all halls in a city

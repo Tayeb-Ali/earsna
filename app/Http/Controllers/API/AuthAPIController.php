@@ -193,5 +193,26 @@ class AuthAPIController extends ControllerRepository
         }
     }
 
+    // create update user data method using Laravel Sanctum
+    public function updateUser(Request $request)
+    {
+        try {
+            $user = auth()->user();
+            $user->update($request->all());
+            return response()->json(
+                [
+                    'data' => $user,
+                    'status' => true,
+                    'message' => 'User data updated successfully'
+                ], 201);
+        } catch (Exception $e) {
+            return response()->json(
+                [
+                    'data' => $e,
+                    'status' => false,
+                    'message' => 'User data not updated'
+                ], 200);
+        }
+    }
 
 }

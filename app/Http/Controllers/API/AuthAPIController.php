@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Repositories\ControllerRepository;
 use DB;
 use Exception;
+use Hash;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -191,4 +192,6 @@ class AuthAPIController extends ControllerRepository
                 ], 200);
         }
     }
+
+
 }

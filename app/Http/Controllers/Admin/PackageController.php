@@ -4,18 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\NewPackageRequest;
-use App\Http\Requests\UpdatePackageRequest;
+use App\Http\Requests\Admin\UpdatePackageRequest;
 use App\Models\Admin\Feature;
 use App\Models\Admin\FeaturePackage;
 use App\Models\Admin\Package;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class PackageController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -25,7 +29,7 @@ class PackageController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function create()
     {
@@ -35,8 +39,8 @@ class PackageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(NewPackageRequest $request)
     {
@@ -57,8 +61,8 @@ class PackageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Package  $package
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\Package $package
+     * @return Response
      */
     public function edit(Package $package)
     {
@@ -69,9 +73,9 @@ class PackageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Package  $package
-     * @return \Illuminate\Http\Response
+     * @param UpdatePackageRequest $request
+     * @param Package $package
+     * @return Response
      */
     public function update(UpdatePackageRequest $request, Package $package)
     {
@@ -99,8 +103,8 @@ class PackageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Package  $package
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\Package $package
+     * @return Response
      */
     public function destroy(Package $package)
     {

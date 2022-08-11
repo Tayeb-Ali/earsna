@@ -75,7 +75,7 @@ class RoleSeeder extends Seeder
         ];
 
         foreach ($roles as $role) {
-            $r = Role::create(['name' => $role['name']]);
+            $r = Role::firstOrCreate(['name' => $role['name']]);
 
             if (in_array($r->name, ['accountant', 'data_entry'])) {
                 foreach ($role['permissions'] as $permission) {

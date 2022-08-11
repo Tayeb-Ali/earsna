@@ -14,7 +14,7 @@ class UpdatePackageRequest extends FormRequest
      */
     public function authorize()
     {
-        return ($this->user()->isAdmin() && ! $this->user()->isClient());
+        return true;
     }
 
     /**
@@ -25,17 +25,10 @@ class UpdatePackageRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:225', Rule::unique('packages')->ignore($this->package->id, 'id') ],
-            'features' => ['required', 'exists:features,id'],
+            'name' => ['required', 'string', 'max:225'],
+            'features' => ['required', 'array'],
+            'features.*' => ['exists:features,id'],
             'price' => ['required', 'numeric']
         ];
     }
-
-    public function prepareForValidation()
-    {
-        $this->merge([
-            'price' => $this->price * 100
-        ]);
-    }
 }
-

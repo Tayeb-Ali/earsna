@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Repositories\ControllerRepository;
 use DB;
 use Exception;
-use Hash;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -90,7 +89,7 @@ class AuthAPIController extends ControllerRepository
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone' => $request->phone,
-                'password' => Hash::make($request->password),
+                'password' =>$request->password,
             ]);
 
             $token = $user->createToken($request->email)->plainTextToken;

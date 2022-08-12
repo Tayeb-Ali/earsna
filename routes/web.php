@@ -50,10 +50,12 @@ Route::group([
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
 ], function () {
     Route::get('/', function () {
-        return Auth::check()
-            ? (request()->user()->isClient() ? redirect()->route('halls.index') : redirect()->route('admin.dashboard'))
-            : (redirect()->route('login'));
+        return view('home');
     });
+//        return Auth::check()
+//            ? (request()->user()->isClient() ? redirect()->route('halls.index') : redirect()->route('admin.dashboard'))
+//            : (redirect()->route('login'));
+//    });
 
     Route::middleware(['auth'])->group(function () {
         // Admin Routes

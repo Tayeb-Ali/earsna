@@ -7,7 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\NewClientRequest;
 use App\Models\Admin\{BusinessField, Client};
 use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Spatie\Permission\Models\Permission;
 
@@ -24,7 +29,7 @@ class ClientController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -37,7 +42,7 @@ class ClientController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -51,8 +56,8 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param NewClientRequest $request
+     * @return RedirectResponse
      */
     public function store(NewClientRequest $request)
     {
@@ -70,8 +75,8 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Client $client
-     * @return \Illuminate\Http\Response
+     * @param Client $client
+     * @return Application|Factory|View
      */
     public function edit(Client $client)
     {
@@ -82,20 +87,27 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Client $client
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Client $client
+     * @return Response
      */
     public function update(Request $request, Client $client)
     {
-        //
+        $client->update($request->only(['address', 'business_field_id']));
+        if ($request->has('password')) {
+            $input = $request->only(['name', 'email', 'phone', 'password']);
+        } else {
+            $input = $request->only(['name', 'email', 'phone']);
+        }
+        $client->user->update($input);
+        return redirect()->route('clients.index')->withMessage(__('page.clients.flash.updated'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param \App\Models\Client $client
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(Client $client)
     {
@@ -121,7 +133,8 @@ class ClientController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'client_id' => $client->id
+            'client_id' => $client->id,
+            'password' => $request->password,
         ]);
 
         $client->update(['user_id' => $user->id]);

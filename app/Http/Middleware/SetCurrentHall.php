@@ -18,7 +18,7 @@ class SetCurrentHall
     public function handle(Request $request, Closure $next)
     {
         if (! Session::has('hall')) {
-            return redirect()->route('client.halls.index');
+            return redirect()->route('halls.index');
         }
 
         return $next($request);

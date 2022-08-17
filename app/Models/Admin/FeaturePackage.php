@@ -2,7 +2,10 @@
 
 namespace App\Models\Admin;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Admin\FeaturePackage
@@ -10,19 +13,20 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property int $id
  * @property int $feature_id
  * @property int $package_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|FeaturePackage newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|FeaturePackage newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|FeaturePackage query()
- * @method static \Illuminate\Database\Eloquent\Builder|FeaturePackage whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|FeaturePackage whereFeatureId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|FeaturePackage whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|FeaturePackage wherePackageId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|FeaturePackage whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static Builder|FeaturePackage newModelQuery()
+ * @method static Builder|FeaturePackage newQuery()
+ * @method static Builder|FeaturePackage query()
+ * @method static Builder|FeaturePackage whereCreatedAt($value)
+ * @method static Builder|FeaturePackage whereFeatureId($value)
+ * @method static Builder|FeaturePackage whereId($value)
+ * @method static Builder|FeaturePackage wherePackageId($value)
+ * @method static Builder|FeaturePackage whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class FeaturePackage extends Pivot
 {
     public $incrementing = true;
+    protected $table = 'feature_package';
 }

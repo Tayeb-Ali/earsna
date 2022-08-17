@@ -1,0 +1,13 @@
+{
+    "name": "Hall",
+    "alias": "hall",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Hall\\Providers\\HallServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

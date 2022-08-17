@@ -197,6 +197,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        App\Providers\TenancyServiceProvider::class,
+        Mckenziearts\Notify\LaravelNotifyServiceProvider::class
 
     ],
 

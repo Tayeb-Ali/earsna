@@ -31,6 +31,9 @@ Route::group(['as' => 'api.'], function () {
 // Get all advertisements
         Route::apiResource('/advertisements', AdvertisementController::class);
 
+
+//        Route::apiResource('/features', AdvertisementController::class);
+
         //FCM
 
         Route::group(['prefix' => 'fcm'], function () {

@@ -38,10 +38,10 @@ return [
     ],
     'users' => [
         'index' => [
-            'header'=> 'المستخدمون',
+            'header' => 'المستخدمون',
             'table' => ['name' => 'الاسم', 'email' => 'البريد الإلكتروني', 'phone' => 'الهاتف', 'role' => 'الدور'],
         ],
-        'create'=> ['header' => 'إنشاء مستخدم جديد'],
+        'create' => ['header' => 'إنشاء مستخدم جديد'],
         'edit' => ['header' => 'تحديث بيانات المستخدم :user'],
         'form' => [
             'name' => ['label' => 'الإسم الكامل', 'placeholder' => 'الرجاء إدخال اسم المستخدم الكامل'],
@@ -62,7 +62,7 @@ return [
     'features' => [
         'index' => ['header' => 'الميزات', 'table' => ['description' => 'الوصف']],
         'create' => ['header' => 'إنشاء ميزة جديدة'],
-        'edit' => ['header' => 'تحديث الميزة :feature', ],
+        'edit' => ['header' => 'تحديث الميزة :feature',],
         'form' => ['description' => ['label' => 'الوصف', 'placeholder' => 'اكتب شرحا مبسطا لهذه الميزة']],
         'flash' => [
             'created' => 'تم إنشاء ميزة جديدة ',
@@ -86,8 +86,8 @@ return [
     ],
     'packages' => [
         'index' => ['header' => 'الباقات'],
-        'create' => [ 'header' => 'إنشاء باقة جديدة', ],
-        'edit' => ['header' => 'تحديث الباقة :package', ],
+        'create' => ['header' => 'إنشاء باقة جديدة',],
+        'edit' => ['header' => 'تحديث الباقة :package',],
         'form' => [
             'name' => ['label' => 'الإسم', 'placeholder' => 'اكتب إسم الباقة هنا.'],
             'features' => ['label' => 'الميزات'],
@@ -121,6 +121,7 @@ return [
             'name' => ['label' => 'الإسم الكامل', 'placeholder' => 'الرجاء إدخال اسم العميل الكامل'],
             'phone' => ['label' => 'الهاتف', 'placeholder' => 'الرجاء كتابة رقم الجوال متضمناً مفتاح البلد'],
             'email' => ['label' => 'البريد الإلكتروني', 'placeholder' => 'client@example.com'],
+            'password' => ['label' => 'كلمة السر', 'placeholder' => 'كلمة المرور'],
             'address' => ['label' => 'عنوان مقر العمل', 'placeholder' => 'الرجاء كتابة عنوان مقر العمل'],
             'businessField' => ['label' => 'مجال العمل'],
             'domain' => ['label' => 'رابط الموقع', 'placeholder' => 'ersana.com'],
@@ -157,7 +158,7 @@ return [
     ],
     'businessFields' => [
         'index' => ['header' => 'مجالات العمل', 'table' => ['field' => 'المجال']],
-        'create' => [ 'header' => 'إنشاء مجال عمل جديد', ],
+        'create' => ['header' => 'إنشاء مجال عمل جديد',],
         'edit' => ['header' => 'تحديث بيانات مجال العمل :field'],
         'form' => [
             'name' => ['label' => 'الإسم', 'placeholder' => 'الأعراس و المناسبات'],

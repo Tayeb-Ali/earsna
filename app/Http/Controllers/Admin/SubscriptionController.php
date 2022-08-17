@@ -9,14 +9,23 @@ use App\Models\Admin\Package;
 use App\Models\Admin\Subscription;
 use App\Models\Hall;
 use App\Notifications\ClientSubscribedNotification;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Session;
+use function PHPUnit\Framework\isEmpty;
 
 class SubscriptionController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -28,11 +37,16 @@ class SubscriptionController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|RedirectResponse
      */
     public function create()
     {
-        $clients = Client::all();
+        $subs = Subscription::all()->pluck('client_id');
+         $clients = Client::whereNotIn('id', $subs)->get();
+        if ($clients->isEmpty()) {
+            notify()->info('no New User yeit');
+            return redirect()->back();
+        }
         $packages = Package::all();
 
         return view('admin.subscriptions.create', compact('clients', 'packages'));
@@ -41,30 +55,47 @@ class SubscriptionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param NewSubscriptionRequest $request
+     * @return RedirectResponse
+     * @throws \Throwable
      */
     public function store(NewSubscriptionRequest $request)
     {
-        $subscription = Subscription::create([
-            'client_id' => $request->client_id,
-            'package_id' => $request->package_id
-        ]);
+//        return $request->all();
+        try {
+            DB::beginTransaction();
+            $subscription = Subscription::where('client_id', $request->client_id)->first();
+            if (isset($subscription)) {
+                notify()->error('is Subscription before ⚡️');
+                return redirect()->back();
+            }
+            $subscription = Subscription::create([
+                'client_id' => $request->client_id,
+                'package_id' => $request->package_id
+            ]);
+//            $this->createClientHalls($request);
+            $subscription->client->user->notify(new ClientSubscribedNotification($subscription));
+            DB::commit();
+            notify()->success(__('page.subscriptions.flash.created'));
+            return redirect()
+                ->route('subscriptions.index');
 
-        $this->createClientHalls($request);
-
-        // $subscription->client->user->notify(new ClientSubscribedNotification($subscription));
-
-        return redirect()
-            ->route('subscriptions.index')
-            ->withMessage(__('page.subscriptions.flash.created'));
+        } catch (\Exception $e) {
+            DB::rollBack();
+            notify()->error($e->getMessage() . ' ⚡️');
+            return redirect()->back();
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            notify()->error($e->getMessage() . ' ⚡️');
+            return redirect()->back();
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Subscription  $subscription
-     * @return \Illuminate\Http\Response
+     * @param Subscription $subscription
+     * @return Application|Factory|View
      */
     public function edit(Subscription $subscription)
     {
@@ -76,9 +107,9 @@ class SubscriptionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Subscription  $subscription
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Subscription $subscription
+     * @return RedirectResponse
      */
     public function update(Request $request, Subscription $subscription)
     {
@@ -103,8 +134,8 @@ class SubscriptionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Subscription  $subscription
-     * @return \Illuminate\Http\Response
+     * @param Subscription $subscription
+     * @return Response
      */
     public function destroy(Subscription $subscription)
     {

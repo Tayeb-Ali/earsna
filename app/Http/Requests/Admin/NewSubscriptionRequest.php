@@ -25,12 +25,7 @@ class NewSubscriptionRequest extends FormRequest
     {
         return [
             'client_id' => ['required', 'exists:clients,id'],
-            'package_id' => ['required', 'exists:packages,id'],
-            'halls' => ['required', 'array'],
-            'halls.*.name' => ['required', 'string', 'unique:halls,name', 'max:255'],
-            'halls.*.city' => ['required', 'in:bahri,khartoum,madani,omdurman,port sudan', 'max:255'],
-            'halls.*.address' => ['required', 'string', 'max:255'],
-            'halls.*.capacity' => ['required', 'string', 'numeric'],
+            'package_id' => ['required', 'exists:packages,id']
         ];
     }
 }

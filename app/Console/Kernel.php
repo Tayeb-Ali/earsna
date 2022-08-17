@@ -9,6 +9,7 @@ use App\Models\Setting;
 use App\Notifications\BookingBeforeDueDateNotification;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Session;
 
 class Kernel extends ConsoleKernel
 {

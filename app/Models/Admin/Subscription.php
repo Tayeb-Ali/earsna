@@ -2,8 +2,12 @@
 
 namespace App\Models\Admin;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Admin\Subscription
@@ -12,20 +16,20 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $client_id
  * @property int $package_id
  * @property string $status
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Admin\Client|null $client
- * @property-read \App\Models\Admin\Package|null $package
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription query()
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription whereClientId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription wherePackageId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Subscription whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Client|null $client
+ * @property-read Package|null $package
+ * @method static Builder|Subscription newModelQuery()
+ * @method static Builder|Subscription newQuery()
+ * @method static Builder|Subscription query()
+ * @method static Builder|Subscription whereClientId($value)
+ * @method static Builder|Subscription whereCreatedAt($value)
+ * @method static Builder|Subscription whereId($value)
+ * @method static Builder|Subscription wherePackageId($value)
+ * @method static Builder|Subscription whereStatus($value)
+ * @method static Builder|Subscription whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class Subscription extends Model
 {
@@ -35,17 +39,17 @@ class Subscription extends Model
 
     protected $with = 'package';
 
-    public function client()
+    public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);
     }
 
-    public function package()
+    public function package(): BelongsTo
     {
         return $this->belongsTo(Package::class);
     }
 
-    public function isActive()
+    public function isActive(): bool
     {
         return $this->status === 'active';
     }

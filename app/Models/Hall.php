@@ -2,9 +2,18 @@
 
 namespace App\Models;
 
+use App\Models\Admin\Client;
 use App\Models\Client\BookingTime;
+use App\Models\Client\Customer;
+use App\Models\Client\Offer;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Hall
@@ -16,24 +25,24 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $capacity
  * @property string|null $images
  * @property int $client_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|BookingTime[] $bookingTimes
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection|BookingTime[] $bookingTimes
  * @property-read int|null $booking_times_count
- * @property-read \App\Models\Admin\Client|null $client
- * @method static \Illuminate\Database\Eloquent\Builder|Hall newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Hall newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Hall query()
- * @method static \Illuminate\Database\Eloquent\Builder|Hall whereAddress($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Hall whereCapacity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Hall whereCity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Hall whereClientId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Hall whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Hall whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Hall whereImages($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Hall whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Hall whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property-read Client|null $client
+ * @method static Builder|Hall newModelQuery()
+ * @method static Builder|Hall newQuery()
+ * @method static Builder|Hall query()
+ * @method static Builder|Hall whereAddress($value)
+ * @method static Builder|Hall whereCapacity($value)
+ * @method static Builder|Hall whereCity($value)
+ * @method static Builder|Hall whereClientId($value)
+ * @method static Builder|Hall whereCreatedAt($value)
+ * @method static Builder|Hall whereId($value)
+ * @method static Builder|Hall whereImages($value)
+ * @method static Builder|Hall whereName($value)
+ * @method static Builder|Hall whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class Hall extends Model
 {
@@ -41,23 +50,37 @@ class Hall extends Model
 
     protected $guarded = [];
 
-    public function client()
+    public function client(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\Admin\Client::class);
+        return $this->belongsTo(Client::class);
     }
 
-    public function customers()
+    public function customers(): HasMany
     {
         return $this->hasMany(Customer::class);
     }
 
-    public function bookingTimes()
+    public function booking_times(): HasMany
     {
         return $this->hasMany(BookingTime::class);
     }
 
-    public function hasSettings()
+    public function hasSettings(): bool
     {
         return Setting::where('hall_id', $this->id)->exists();
+    }
+
+    public function revenues(): HasMany
+    {
+        return $this->hasMany(Revenue::class);
+    }
+
+    public function offers(): HasMany
+    {
+        return $this->hasMany(Offer::class);
+    }
+    public function expense(): HasMany
+    {
+        return $this->hasMany(Expense::class);
     }
 }

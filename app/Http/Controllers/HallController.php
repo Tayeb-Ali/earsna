@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use DB;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\Response;
 use App\Http\Requests\{NewHallRequest, UpdateHallRequest};
 use App\Models\Admin\Client;
 use App\Models\Client\{Booking, BookingTime, Customer, Offer};
@@ -15,7 +20,7 @@ class HallController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -39,7 +44,7 @@ class HallController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function create(Request $request)
     {
@@ -50,32 +55,44 @@ class HallController extends Controller
         return view('halls.create', compact('target_client', 'clients'));
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function store(NewHallRequest $request)
     {
-        $data = $request->except('images');
+        try {
+            $db = DB::beginTransaction();
+            $data = $request->except('images');
 
-        if ($request->has('images')) {
-            $images = [];
+            if ($request->has('images')) {
+                $images = [];
 
-            foreach ($request->images as $image) {
-                $images[] = $image->store('images/halls');
+                foreach ($request->images as $image) {
+                    $images[] = $image->store('halls', 'public');
+//                $images[] = $image->store('images/halls');
+                }
+
+                $data['images'] = json_encode($images);
             }
 
-            $data['images'] = json_encode($images);
+            Hall::create($data);
+            DB::commit();
+            return redirect()
+                ->route('halls.index')
+                ->withMessage(__('page.halls.flash.created'));
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()
+                ->route('halls.index')
+                ->withMessage(__('page.halls.flash.error'));
         }
-
-        Hall::create($data);
-
-        return redirect()
-            ->route('halls.index')
-            ->withMessage(__('page.halls.flash.created'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Hall $hall
-     * @return \Illuminate\Http\Response
+     * @param Hall $hall
+     * @return Response
      */
     public function edit(Hall $hall)
     {
@@ -85,9 +102,9 @@ class HallController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Hall $hall
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Hall $hall
+     * @return Response
      */
     public function update(UpdateHallRequest $request, Hall $hall)
     {
@@ -117,8 +134,8 @@ class HallController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Hall  $hall
-     * @return \Illuminate\Http\Response
+     * @param Hall $hall
+     * @return Response
      */
     public function destroy(Hall $hall)
     {

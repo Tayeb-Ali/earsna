@@ -45,6 +45,16 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('create-tenant', function () {
+    $tenant1 = App\Models\Tenant::create(['id' => 'foo', 'name' => 'Foo', 'database_name' => 'foo_db']);
+    $tenant1->domains()->create(['domain' => 'foo.localhost']);
+//    $tenant1 = App\Models\Tenant::where('id', 'bar')->first();
+//    $tenant1->domains()->delete();
+//    $tenant1->delete();
+    return $tenant1;
+});
+
+
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']

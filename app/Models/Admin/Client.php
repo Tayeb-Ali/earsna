@@ -4,8 +4,16 @@ namespace App\Models\Admin;
 
 use App\Models\Hall;
 use App\Models\User;
+use Database\Factories\Admin\ClientFactory;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Admin\Client
@@ -14,24 +22,24 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $address
  * @property int $business_field_id
  * @property int|null $user_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Admin\BusinessField|null $businessField
- * @property-read \Illuminate\Database\Eloquent\Collection|Hall[] $halls
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read BusinessField|null $businessField
+ * @property-read Collection|Hall[] $halls
  * @property-read int|null $halls_count
- * @property-read \App\Models\Admin\Subscription|null $subscription
+ * @property-read Subscription|null $subscription
  * @property-read User|null $user
- * @method static \Database\Factories\Admin\ClientFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Client newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Client newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Client query()
- * @method static \Illuminate\Database\Eloquent\Builder|Client whereAddress($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Client whereBusinessFieldId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Client whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Client whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Client whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Client whereUserId($value)
- * @mixin \Eloquent
+ * @method static ClientFactory factory(...$parameters)
+ * @method static Builder|Client newModelQuery()
+ * @method static Builder|Client newQuery()
+ * @method static Builder|Client query()
+ * @method static Builder|Client whereAddress($value)
+ * @method static Builder|Client whereBusinessFieldId($value)
+ * @method static Builder|Client whereCreatedAt($value)
+ * @method static Builder|Client whereId($value)
+ * @method static Builder|Client whereUpdatedAt($value)
+ * @method static Builder|Client whereUserId($value)
+ * @mixin Eloquent
  */
 class Client extends Model
 {
@@ -41,22 +49,22 @@ class Client extends Model
 
     protected $with = 'user';
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function subscription()
+    public function subscription(): HasOne
     {
         return $this->hasOne(Subscription::class);
     }
 
-    public function businessField()
+    public function businessField(): BelongsTo
     {
         return $this->belongsTo(BusinessField::class);
     }
 
-    public function halls()
+    public function halls(): HasMany
     {
         return $this->hasMany(Hall::class);
     }

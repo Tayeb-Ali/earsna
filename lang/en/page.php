@@ -134,6 +134,7 @@ return [
         'form' => [
             'name' => ['label' => 'Full Name', 'placeholder' => 'Please insert the client\'s full name',],
             'email' => ['label' => 'Email', 'placeholder' => 'client@example.com',],
+            'password' => ['label' => 'Password', 'placeholder' => 'Password',],
             'phone' => ['label' => 'Phone', 'placeholder' => 'Please write the phone number with the country key'],
             'address' => ['label' => 'Address', 'placeholder' => 'Please write your business location'],
             'businessField' => ['label' => 'Business Field'],

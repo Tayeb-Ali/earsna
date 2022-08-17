@@ -13,9 +13,11 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Session;
 
 class PackageController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -44,7 +46,8 @@ class PackageController extends Controller
      */
     public function store(NewPackageRequest $request)
     {
-        $package = Package::create($request->except(['features']));
+        $input = $request->except('features');
+        $package = Package::create($input);
 
         foreach ($request->features as $feature_id) {
             FeaturePackage::create([
@@ -91,7 +94,8 @@ class PackageController extends Controller
         foreach ($request->features as $feature_id) {
             FeaturePackage::create([
                 'feature_id' => $feature_id,
-                'package_id' => $package->id
+                'package_id' => $package->id,
+                'hall_id' => Session::get('hall')->id
             ]);
         }
 

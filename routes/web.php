@@ -147,5 +147,12 @@ Route::group([
         });
     });
 
+    Route::get('link-public', function () {
+        $targetFolder = storage_path('app/public');
+        $linkFolder = $_SERVER['DOCUMENT_ROOT'] . '/storage';
+        symlink($targetFolder, $linkFolder);
+        echo 'Symlink process successfully completed';
+    });
+
     require __DIR__ . '/auth.php';
 });

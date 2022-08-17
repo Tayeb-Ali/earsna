@@ -217,5 +217,10 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
-    'current_hall' => null
+    'current_hall' => null,
+
+    'tenancy' => [
+        'enabled' => env('TENANCY_ENABLED', true),
+        'domain' => env('TENANCY_DOMAIN', 'earsna.com'),
+    ]
 ];
